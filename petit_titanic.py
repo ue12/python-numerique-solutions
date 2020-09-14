@@ -9,4 +9,4 @@ columns = ['PassengerId', 'Survived', 'Pclass',
            'Name', 'Sex', 'Age', 'SibSp', 'Parch', 'Ticket',
            'Fare', 'Cabin', 'Embarked']
 
-df = pd.read_csv(filename, names=columns, sep=";", index_col='PassengerId')
+petit_df = pd.read_csv(filename, names=columns, sep=";", index_col='PassengerId')
