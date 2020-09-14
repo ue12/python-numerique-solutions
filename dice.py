@@ -32,6 +32,38 @@ def dice(target, nb_dice=2, sides=6):
 ##################################################
 # dice_bis
 ##################################################
+def dice_bis(target, nb_dice=2, sides=6):
+    """
+    même idée, mais au lieu de passer à la dimension supérieure
+    à base de newaxis, on utilise reshape()
+    """
+    # les valeurs du dé, au début en dimension 1
+    values = np.arange(1, sides+1)
+    # sa forme, au début simplement [sides]
+    # puis on la fait grandir progressivement
+    # diemnsion 2 : [sides, 1]
+    # diemnsion 3 : [sides, 1, 1]
+    # diemnsion 4 : [sides, 1, 1, 1]
+    # ...
+    shape = [sides]
+    # le résultat, qui va grossir au fur et à mesure
+    cube = values
+    for dimension in range(nb_dice-1):
+        # pour ajouter une dimension, il nous suffit d'ajouter 1
+        # à la fin de la forme précédente
+        shape.append(1)
+        # un simple reshape suffit
+        values = values.reshape(shape)
+        # ici par broadcasting on ajoute une dimension à notre résultat
+        cube = cube + values
+    # même technique pour finir le calcul
+    return np.sum(cube==target)
+
+
+
+##################################################
+# dice_ter
+##################################################
 # on peut aussi utiliser itertools.product qui permet
 # d'itérer sans aucune mémoire sur le même hypercube
 #
@@ -42,7 +74,7 @@ def dice(target, nb_dice=2, sides=6):
 # "Exercice dice"
 from itertools import product
 
-def dice_bis(target, nb_dice=2, sides=6):
+def dice_ter(target, nb_dice=2, sides=6):
     """
     Une autre méthode complètement, qui n'alloue aucun tableau
     du coup on n'a pas besoin de numpy
@@ -63,11 +95,11 @@ def dice_bis(target, nb_dice=2, sides=6):
 
 
 ##################################################
-# dice_ter
+# dice_quater
 ##################################################
 from itertools import product
 
-def dice_ter(target, nb_dice=2, sides=6):
+def dice_quater(target, nb_dice=2, sides=6):
     """
     La même chose, mais on voit une méthode qui n'utilise pas
     `repeat=` dans itertools.product
@@ -81,9 +113,9 @@ def dice_ter(target, nb_dice=2, sides=6):
 
 
 ##################################################
-# dice_quat
+# dice_quinquies
 ##################################################
-def dice_quat(target, nb_dice=2, sides=6):
+def dice_quinquies(target, nb_dice=2, sides=6):
     """
     Cette version semble un peu plus rapide 
     que les deux  précédentes avec product,
